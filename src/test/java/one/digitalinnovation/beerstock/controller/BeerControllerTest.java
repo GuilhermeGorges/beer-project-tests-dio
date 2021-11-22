@@ -63,9 +63,23 @@ public class BeerControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name",is(beerDTO.getName())))
                 .andExpect(jsonPath("$.brand",is(beerDTO.getBrand())))
-                .andExpect(jsonPath("$.type",is(beerDTO.getType())));
-
+                .andExpect(jsonPath("$.type",is(beerDTO.getType().toString())));
     }
+
+    @Test
+    void whenPOSTIdCalledWithoutRequiredFieldThenAnErrorIdReturned() throws Exception {
+        //given
+        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        beerDTO.setBrand(null);
+
+        //then
+        mockMvc.perform(post(BEER_API_URL_PATH)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(beerDTO)))
+                        .andExpect(status().isBadRequest());
+    }
+
+
 
     //    @Test
 //    void whenPATCHIsCalledToIncrementGreatherThanMaxThenBadRequestStatusIsReturned() throws Exception {
