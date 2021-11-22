@@ -71,6 +71,11 @@ public class BeerServiceTest {
     }
 
 
+
+
+
+
+
 //    @Test
 //    void whenDecrementIsCalledThenDecrementBeerStock() throws BeerNotFoundException, BeerStockExceededException {
 //        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
