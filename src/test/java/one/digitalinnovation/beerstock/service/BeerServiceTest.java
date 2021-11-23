@@ -81,11 +81,24 @@ public class BeerServiceTest {
         when(beerRepository.findByName(expectedFoundBeer.getName()))
                 .thenReturn(Optional.of(expectedFoundBeer));
 
-        //than
+        //then
         BeerDTO foundBeerDTO = beerService.findByName(expectedFoundBeerDTO.getName());
 
         assertThat(foundBeerDTO, is(equalTo(expectedFoundBeerDTO)));
     }
+    @Test
+    void whenNotRegisteredBeerNameIdGivenThenThrowAnException() {
+        //given
+        BeerDTO expectedFoundBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+
+        //when
+        when(beerRepository.findByName(expectedFoundBeerDTO.getName()))
+                .thenReturn(Optional.empty());
+
+        //then
+        assertThrows(BeerNotFoundException.class, () -> beerService.findByName(expectedFoundBeerDTO.getName()));
+    }
+
     //    @Test
 //    void whenDecrementIsCalledThenDecrementBeerStock() throws BeerNotFoundException, BeerStockExceededException {
 //        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
