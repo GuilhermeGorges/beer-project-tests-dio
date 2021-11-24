@@ -51,7 +51,7 @@ public class BeerControllerTest {
     }
 
     @Test
-    void whenPOSTIdCalledThenBeerIdCreated() throws Exception {
+    void whenPOSTIsCalledThenBeerIdCreated() throws Exception {
         //given
         BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
 
@@ -69,7 +69,7 @@ public class BeerControllerTest {
     }
 
     @Test
-    void whenPOSTIdCalledWithoutRequiredFieldThenAnErrorIdReturned() throws Exception {
+    void whenPOSTIsCalledWithoutRequiredFieldThenAnErrorIdReturned() throws Exception {
         //given
         BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
         beerDTO.setBrand(null);
@@ -82,7 +82,7 @@ public class BeerControllerTest {
     }
 
     @Test
-    void whenGETIdCalledWithValidNameThenOkStatusIdReturned() throws Exception {
+    void whenGETIsCalledWithValidNameThenOkStatusIdReturned() throws Exception {
         //given
         BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
 
@@ -98,6 +98,23 @@ public class BeerControllerTest {
                 .andExpect(jsonPath("$.type",is(beerDTO.getType().toString())));
 
     }
+
+
+    @Test
+    void whenGETIsCalledWithoutRegisteredNameThenNotFoundStatusIdReturned() throws Exception {
+        //given
+        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+
+        //when
+        when(beerService.findByName(beerDTO.getName())).thenThrow(BeerNotFoundException.class);
+
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH + "/" + beerDTO.getName())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
+    }
+
 
     //    @Test
 //    void whenPATCHIsCalledToIncrementGreatherThanMaxThenBadRequestStatusIsReturned() throws Exception {
