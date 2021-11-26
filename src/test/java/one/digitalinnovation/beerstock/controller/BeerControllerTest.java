@@ -2,7 +2,6 @@ package one.digitalinnovation.beerstock.controller;
 
 import one.digitalinnovation.beerstock.builder.BeerDTOBuilder;
 import one.digitalinnovation.beerstock.dto.BeerDTO;
-import one.digitalinnovation.beerstock.exception.BeerAlreadyRegisteredException;
 import one.digitalinnovation.beerstock.exception.BeerNotFoundException;
 import one.digitalinnovation.beerstock.service.BeerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -113,7 +112,6 @@ public class BeerControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH + "/" + beerDTO.getName())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
-
     }
 
     @Test
@@ -133,6 +131,7 @@ public class BeerControllerTest {
                 .andExpect(jsonPath("$[0].type",is(beerDTO.getType().toString())));
 
     }
+
     @Test
     void whenGETListWithoutBeersIsCalledThenOkStatusIdReturned() throws Exception {
         //given
