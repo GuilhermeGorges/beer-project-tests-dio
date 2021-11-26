@@ -110,7 +110,7 @@ public class BeerServiceTest {
         List<BeerDTO> foundListBeerDTO = beerService.listAll();
 
         assertThat(foundListBeerDTO, is(not(empty())));
-        assertThat(foundListBeerDTO, is(equalTo(expectedFoundBeerDTO)));
+        assertThat(foundListBeerDTO.get(0), is(equalTo(expectedFoundBeerDTO)));
 
     }
 
