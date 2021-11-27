@@ -190,7 +190,7 @@ public class BeerServiceTest {
         assertThrows(BeerStockExceededException.class, () -> beerService.increment(expectedBeerDTO.getId(),
                 quantityToIncrement));
     }
-    
+
     @Test
     void whenIncrementIsCalledWithInvalidIdThenThrowException() {
         int quantityToIncrement = 10;
